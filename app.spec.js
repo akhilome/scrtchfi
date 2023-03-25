@@ -1,7 +1,7 @@
 const axios = require('axios');
 const request = require('supertest');
 const { app } = require('./app');
-const { mockDentalClinics, mockVetClinics } = require('./clinics.mock');
+const { mockDentalClinics, mockVetClinics } = require('./clinic/clinic.mock');
 
 jest.mock('axios');
 

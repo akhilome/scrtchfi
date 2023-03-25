@@ -1,7 +1,7 @@
 const { ErrorResponseObject } = require('@akhilome/common');
 const express = require('express');
 const helmet = require('helmet');
-const { handleFetchClinics } = require('./clinic.handler');
+const { handleFetchClinics } = require('./clinic/clinic.handler');
 
 const app = express();
 

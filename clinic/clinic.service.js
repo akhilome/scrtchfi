@@ -1,5 +1,5 @@
 const { default: axios } = require('axios');
-const { normalizeDental, normalizeVet, mapToStateCode } = require('./utils');
+const { normalizeDental, normalizeVet, mapToStateCode } = require('../utils');
 
 const spoolClinics = async ({ type, url }) => {
   const { data } = await axios.get(url);
