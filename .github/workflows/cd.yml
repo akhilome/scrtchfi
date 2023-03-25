@@ -1,4 +1,4 @@
-name: Build, Publish, Deploy
+name: Test, Build, Publish, Deploy
 
 on:
   push:
@@ -10,7 +10,25 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+
+      - name: Install Deps
+        run: yarn
+
+      - name: Run Tests & Collect Coverage
+        run: yarn test --coverage
+
   build-and-push-image:
+    needs: run-tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,10 +36,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -29,12 +47,12 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
