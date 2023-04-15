@@ -28,7 +28,7 @@ const spoolAllClinics = async () => {
 };
 
 const filterByProp = ({ data, key, value }) => {
-  return data.filter((item) => item[key].toLowerCase() === value.toLowerCase());
+  return data.filter((item) => item[key].toLowerCase() === value?.toLowerCase());
 };
 
 const filterByAvailability = ({ data, key, value }) => {
